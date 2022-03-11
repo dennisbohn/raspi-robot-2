@@ -1,2 +1,2 @@
 # raspi-robot-2
-Enthält Server und Client für den Raspberry Pi Roboter
+Enthält Code für Broadcaster, Client und Server
