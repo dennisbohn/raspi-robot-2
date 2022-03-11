@@ -10,34 +10,29 @@ class VideoBuffer extends EventEmitter {
   createClient() {
     return new VideoBufferClient(this);
   }
-  getChunkType(chunk) {
-    return chunk[0] & 0b11111;
-  }
   pushChunk(chunk) {
-    var chunkType = this.getChunkType(chunk);
+    var chunkType = chunk[0] & 0b11111;
 
     if (chunkType === 7) {
       this.sps = chunk;
-      this.emit("header", chunk);
-      return;
+      this.emit("headerChunk", chunk);
     }
 
     if (chunkType === 8) {
       this.pps = chunk;
-      this.emit("header", chunk);
-      return;
+      this.emit("headerChunk", chunk);
     }
 
     if (chunkType === 5) {
       this.frames = [chunk];
       this.keyframe++;
+      this.emit("newChunkAvailable");
     }
 
     if (chunkType === 1) {
       this.frames.push(chunk);
+      this.emit("newChunkAvailable");
     }
-
-    this.emit("chunk");
   }
 }
 

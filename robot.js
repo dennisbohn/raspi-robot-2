@@ -7,7 +7,7 @@ const videoBuffer = new VideoBuffer();
 const camera = new Camera({
   width: 640,
   height: 360,
-  framerate: 20,
+  framerate: 30,
   profile: "baseline",
   timeout: 0,
   bitrate: 1000000,
@@ -23,12 +23,14 @@ const videoBufferClient = videoBuffer.createClient();
 videoBufferClient.on("chunk", (chunk) => {
   var chunkType = chunk[0] & 0b11111;
   console.log(chunkType);
+  videoBufferClient.chunkReceived();
 });
 videoBufferClient.start();
 
 // Test low speed
-setInterval(() => {
-  videoBufferClient.chunkReceived();
-}, 100);
+setTimeout(() => {
+  videoBufferClient.stop();
+  console.log("stop");
+}, 5000);
 
 camera.start();
