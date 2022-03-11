@@ -1,3 +1,44 @@
-class VideoBuffer {
-  constructor() {}
+const VideoBufferClient = require("./VideoBufferClient.js");
+const EventEmitter = require("events");
+
+class VideoBuffer extends EventEmitter {
+  constructor() {
+    super();
+    this.keyframe = 0;
+    this.frames = [];
+  }
+  createClient() {
+    return new VideoBufferClient(this);
+  }
+  getChunkType(chunk) {
+    return chunk[0] & 0b11111;
+  }
+  pushChunk(chunk) {
+    var chunkType = this.getChunkType(chunk);
+
+    if (chunkType === 7) {
+      this.sps = chunk;
+      this.emit("header", chunk);
+      return;
+    }
+
+    if (chunkType === 8) {
+      this.pps = chunk;
+      this.emit("header", chunk);
+      return;
+    }
+
+    if (chunkType === 5) {
+      this.frames = [chunk];
+      this.keyframe++;
+    }
+
+    if (chunkType === 1) {
+      this.frames.push(chunk);
+    }
+
+    this.emit("chunk");
+  }
 }
+
+module.exports = VideoBuffer;

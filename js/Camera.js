@@ -21,9 +21,8 @@ class Camera extends EventEmitter {
           },
         })
       )
-      .on("data", (data) => {
-        var type = data[0] & 0b11111;
-        this.emit("chunk", { type, data });
+      .on("data", (chunk) => {
+        this.emit("chunk", chunk);
       });
   }
 }
