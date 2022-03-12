@@ -22,15 +22,8 @@ camera.on("chunk", (chunk) => {
 const videoBufferClient = videoBuffer.createClient();
 videoBufferClient.on("chunk", (chunk) => {
   var chunkType = chunk[0] & 0b11111;
-  console.log(chunkType);
   videoBufferClient.chunkReceived();
 });
 videoBufferClient.start();
-
-// Test low speed
-setTimeout(() => {
-  videoBufferClient.stop();
-  console.log("stop");
-}, 5000);
 
 camera.start();
