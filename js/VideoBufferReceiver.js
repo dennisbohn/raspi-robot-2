@@ -1,9 +1,5 @@
-const EventEmitter = require("events");
-
-class VideoBufferReceiver extends EventEmitter {
+class VideoBufferReceiver {
   constructor(videoBuffer, socket) {
-    super();
-
     this.videoBuffer = videoBuffer;
     this.socket = socket;
 
