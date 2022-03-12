@@ -1,3 +1,4 @@
 .vscode
+.authToken
 node_modules
 package-lock.json

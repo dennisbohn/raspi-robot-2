@@ -1,7 +1,8 @@
+const readFileSync = require("fs").readFileSync;
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer);
 const VideoChannel = require("./js/VideoChannel.js");
-const authToken = "t4QBBRKBiWMFEkrphqi8";
+const authToken = readFileSync(".authToken").toString().trim();
 
 // Create channel
 const robotVideoChannel = new VideoChannel();
