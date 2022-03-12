@@ -52,8 +52,7 @@ class VideoBufferReceiver {
     }
   }
   videoChunkReceived() {
-    this.bufferedVideoChunks--;
-    this.bufferedVideoChunks = Math.max(this.bufferedVideoChunks, 0);
+    this.bufferedVideoChunks = Math.max(this.bufferedVideoChunks - 1, 0);
     this.sendVideoChunks();
   }
 }
