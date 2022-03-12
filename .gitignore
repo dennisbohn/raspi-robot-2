@@ -1,5 +1,3 @@
 .vscode
 node_modules
-package-lock.json
-.vscode/sftp.json
-.vscode/sftp.json
+package-lock.jsonW
