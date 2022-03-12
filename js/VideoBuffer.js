@@ -14,25 +14,22 @@ class VideoBuffer extends EventEmitter {
   pushVideoChunk(videoChunk) {
     var videoChunkType = videoChunk[0] & 0b11111;
 
-    if (videoChunkType === 7) {
-      this.sps = videoChunk;
-      this.emit("videoHeaderChunk", videoChunk);
+    if (videoChunkType === 1) {
+      this.frames.push(videoChunk);
+      this.emit("newVideoChunkAvailable");
     }
-
-    if (videoChunkType === 8) {
-      this.pps = videoChunk;
-      this.emit("videoHeaderChunk", videoChunk);
-    }
-
     if (videoChunkType === 5) {
       this.frames = [videoChunk];
       this.keyframe++;
       this.emit("newVideoChunkAvailable");
     }
-
-    if (videoChunkType === 1) {
-      this.frames.push(videoChunk);
-      this.emit("newVideoChunkAvailable");
+    if (videoChunkType === 7) {
+      this.sps = videoChunk;
+      this.emit("videoHeaderChunk", videoChunk);
+    }
+    if (videoChunkType === 8) {
+      this.pps = videoChunk;
+      this.emit("videoHeaderChunk", videoChunk);
     }
   }
 }
