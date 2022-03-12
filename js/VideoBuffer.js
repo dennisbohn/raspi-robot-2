@@ -1,4 +1,4 @@
-const VideoBufferClient = require("./VideoBufferClient.js");
+const VideoBufferReceiver = require("./VideoBufferReceiver.js");
 const EventEmitter = require("events");
 
 class VideoBuffer extends EventEmitter {
@@ -6,32 +6,33 @@ class VideoBuffer extends EventEmitter {
     super();
     this.keyframe = 0;
     this.frames = [];
+    this.pushVideoChunk = this.pushVideoChunk.bind(this);
   }
-  createClient() {
-    return new VideoBufferClient(this);
+  addReceiverSocket(socket) {
+    return new VideoBufferReceiver(this, socket);
   }
-  pushChunk(chunk) {
-    var chunkType = chunk[0] & 0b11111;
+  pushVideoChunk(videoChunk) {
+    var videoChunkType = videoChunk[0] & 0b11111;
 
-    if (chunkType === 7) {
-      this.sps = chunk;
-      this.emit("headerChunk", chunk);
+    if (videoChunkType === 7) {
+      this.sps = videoChunk;
+      this.emit("videoHeaderChunk", videoChunk);
     }
 
-    if (chunkType === 8) {
-      this.pps = chunk;
-      this.emit("headerChunk", chunk);
+    if (videoChunkType === 8) {
+      this.pps = videoChunk;
+      this.emit("videoHeaderChunk", videoChunk);
     }
 
-    if (chunkType === 5) {
-      this.frames = [chunk];
+    if (videoChunkType === 5) {
+      this.frames = [videoChunk];
       this.keyframe++;
-      this.emit("newChunkAvailable");
+      this.emit("newVideoChunkAvailable");
     }
 
-    if (chunkType === 1) {
-      this.frames.push(chunk);
-      this.emit("newChunkAvailable");
+    if (videoChunkType === 1) {
+      this.frames.push(videoChunk);
+      this.emit("newVideoChunkAvailable");
     }
   }
 }

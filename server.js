@@ -1,1 +1,20 @@
-const VideoBuffer = require("./js/VideoBuffer.js");
+const httpServer = require("http").createServer();
+const io = require("socket.io")(httpServer);
+const VideoChannel = require("./js/VideoChannel.js");
+const authToken = "t4QBBRKBiWMFEkrphqi8";
+
+// Create channel
+const robotVideoChannel = new VideoChannel();
+
+io.on("connection", (socket) => {
+  // Receiver
+  if (!socket.handshake.auth.token) {
+    robotVideoChannel.addReceiverSocket(socket);
+  }
+  // Broadcaster
+  if (socket.handshake.auth.token === authToken) {
+    robotVideoChannel.setBroadcaster(socket);
+  }
+});
+
+httpServer.listen(3000);

@@ -1,29 +1,28 @@
 const Camera = require("./js/Camera.js");
 const VideoBuffer = require("./js/VideoBuffer.js");
-
+const io = require("socket.io-client");
+const socket = io("wss://robot.bohn.media/", {
+  auth: { token: "t4QBBRKBiWMFEkrphqi8" },
+});
 const videoBuffer = new VideoBuffer();
 
 // Raspberry pi camera
 const camera = new Camera({
-  width: 640,
-  height: 360,
+  width: 1280,
+  height: 720,
   framerate: 30,
   profile: "baseline",
   timeout: 0,
-  bitrate: 1000000,
+  bitrate: 2500000,
 });
 
 // Send all chunks to the videobuffer
-camera.on("chunk", (chunk) => {
-  videoBuffer.pushChunk(chunk);
-});
+camera.on("videoChunk", videoBuffer.pushVideoChunk);
 
-// Create a videobuffer client to send video frames to the server
-const videoBufferClient = videoBuffer.createClient();
-videoBufferClient.on("chunk", (chunk) => {
-  var chunkType = chunk[0] & 0b11111;
-  videoBufferClient.chunkReceived();
-});
-videoBufferClient.start();
-
+// Start camera
 camera.start();
+
+// Connect to websocket
+socket.on("connect", () => {
+  videoBuffer.addReceiverSocket(socket);
+});

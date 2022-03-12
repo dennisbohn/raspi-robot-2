@@ -15,14 +15,14 @@ class Camera extends EventEmitter {
       .pipe(new Splitter(NALseparator))
       .pipe(
         new Stream.Transform({
-          transform: function (chunk, encoding, callback) {
-            this.push(chunk);
+          transform: function (videoChunk, encoding, callback) {
+            this.push(videoChunk);
             callback();
           },
         })
       )
-      .on("data", (chunk) => {
-        this.emit("chunk", chunk);
+      .on("data", (videoChunk) => {
+        this.emit("videoChunk", videoChunk);
       });
   }
 }
