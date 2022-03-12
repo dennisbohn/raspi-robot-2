@@ -48,7 +48,6 @@ class VideoBufferReceiver {
       this.frame < this.videoBuffer.frames.length
     ) {
       this.bufferedVideoChunks++;
-      console.log(this.bufferedVideoChunks);
       this.sendVideoChunk(this.videoBuffer.frames[this.frame++]);
     }
   }
