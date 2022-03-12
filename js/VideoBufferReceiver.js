@@ -15,6 +15,7 @@ class VideoBufferReceiver {
 
     this.sendVideoHeader();
     this.sendVideoChunks();
+    this.removeEventListeners();
 
     this.videoBuffer.on("headerVideoChunk", this.sendVideoChunk);
     this.videoBuffer.on("newVideoChunkAvailable", this.sendVideoChunks);
