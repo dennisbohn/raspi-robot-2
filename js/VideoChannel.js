@@ -4,7 +4,6 @@ const VideoBuffer = require("./VideoBuffer");
 class VideoChannel extends EventEmitter {
   constructor(socket, authKey) {
     super();
-    this.stats = "";
     this.videoChunkReceived = this.videoChunkReceived.bind(this);
     this.videoBuffer = new VideoBuffer();
     this.addReceiverSocket = this.videoBuffer.addReceiverSocket.bind(
@@ -12,8 +11,13 @@ class VideoChannel extends EventEmitter {
     );
   }
   setBroadcaster(socket) {
+    this.removeBroadcasterEventListeners();
     this.broadcaster = socket;
     this.addBroadcasterEventListeners();
+  }
+  removeBroadcasterEventListeners() {
+    if (!this.broadcaster) return;
+    this.broadcaster.removeAllListeners();
   }
   addBroadcasterEventListeners() {
     this.broadcaster.on("videoChunk", this.videoChunkReceived);

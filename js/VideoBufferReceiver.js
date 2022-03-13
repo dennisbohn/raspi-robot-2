@@ -11,25 +11,25 @@ class VideoBufferReceiver {
     this.sendVideoChunk = this.sendVideoChunk.bind(this);
     this.sendVideoChunks = this.sendVideoChunks.bind(this);
     this.videoChunkReceived = this.videoChunkReceived.bind(this);
-    this.removeEventListeners = this.removeEventListeners.bind(this);
+    this.disconnect = this.disconnect.bind(this);
 
     this.sendVideoHeader();
     this.sendVideoChunks();
-    this.removeEventListeners();
 
     this.videoBuffer.on("headerVideoChunk", this.sendVideoChunk);
     this.videoBuffer.on("newVideoChunkAvailable", this.sendVideoChunks);
     this.socket.on("videoChunkReceived", this.videoChunkReceived);
-    this.socket.on("disconnect", this.removeEventListeners);
+    this.socket.on("disconnect", this.disconnect);
   }
-  removeEventListeners() {
+  disconnect() {
     this.videoBuffer.removeListener("headerVideoChunk", this.sendVideoChunk);
     this.videoBuffer.removeListener(
       "newVideoChunkAvailable",
       this.sendVideoChunks
     );
-    this.socket.removeListener("videoChunkReceived", this.videoChunkReceived);
-    this.socket.removeListener("disconnect", this.removeEventListeners);
+    this.socket.removeAllListeners();
+    this.socket = null;
+    this.videoBuffer = null;
   }
   sendVideoHeader() {
     if (this.videoBuffer.sps) this.sendVideoChunk(this.videoBuffer.sps);
