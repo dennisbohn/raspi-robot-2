@@ -34,7 +34,9 @@ socket.on("connect", () => {
 });
 
 // Hier beginnt der Spaß!!! :D
+/*
 setTimeout(function () {
   motors.speed("a", 100);
   motors.speed("b", 100);
 }, 3000);
+*/
