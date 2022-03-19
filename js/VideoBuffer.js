@@ -7,6 +7,7 @@ class VideoBuffer extends EventEmitter {
     this.keyframe = 0;
     this.frames = [];
     this.pushVideoChunk = this.pushVideoChunk.bind(this);
+    this.addReceiverSocket = this.addReceiverSocket.bind(this);
   }
   addReceiverSocket(socket) {
     return new VideoBufferReceiver(this, socket);
@@ -25,11 +26,11 @@ class VideoBuffer extends EventEmitter {
     }
     if (videoChunkType === 7) {
       this.sps = videoChunk;
-      this.emit("videoHeaderChunk", videoChunk);
+      this.emit("headerVideoChunk", videoChunk);
     }
     if (videoChunkType === 8) {
       this.pps = videoChunk;
-      this.emit("videoHeaderChunk", videoChunk);
+      this.emit("headerVideoChunk", videoChunk);
     }
   }
 }

@@ -6,9 +6,7 @@ class VideoChannel extends EventEmitter {
     super();
     this.videoChunkReceived = this.videoChunkReceived.bind(this);
     this.videoBuffer = new VideoBuffer();
-    this.addReceiverSocket = this.videoBuffer.addReceiverSocket.bind(
-      this.videoBuffer
-    );
+    this.addReceiverSocket = this.videoBuffer.addReceiverSocket;
   }
   setBroadcaster(socket) {
     this.removeBroadcasterEventListeners();

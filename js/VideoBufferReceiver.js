@@ -27,18 +27,18 @@ class VideoBufferReceiver {
       "newVideoChunkAvailable",
       this.sendVideoChunks
     );
-    this.socket.removeAllListeners();
-    this.socket = null;
-    this.videoBuffer = null;
+    this.socket.removeAllListeners("videoChunkReceived");
+    this.socket.removeAllListeners("disconnect");
   }
   sendVideoHeader() {
     if (this.videoBuffer.sps) this.sendVideoChunk(this.videoBuffer.sps);
     if (this.videoBuffer.pps) this.sendVideoChunk(this.videoBuffer.pps);
   }
-  sendVideoChunk(chunk) {
-    this.socket.emit("videoChunk", chunk);
+  sendVideoChunk(videoChunk) {
+    this.socket.emit("videoChunk", videoChunk);
   }
   sendVideoChunks() {
+    if (!this.videoBuffer) return;
     if (this.keyframe !== this.videoBuffer.keyframe) {
       this.keyframe = this.videoBuffer.keyframe;
       this.frame = 0;
