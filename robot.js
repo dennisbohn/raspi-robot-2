@@ -33,10 +33,7 @@ socket.on("connect", () => {
   videoBuffer.addReceiverSocket(socket);
 });
 
-// Hier beginnt der Spaß!!! :D
-/*
-setTimeout(function () {
-  motors.speed("a", 100);
-  motors.speed("b", 100);
-}, 3000);
-*/
+// Left wheel
+socket.on("motors", (data) => {
+  motors.setMotors(data);
+});

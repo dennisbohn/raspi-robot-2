@@ -8,6 +8,33 @@
   </head>
   <body>
     <div id="player"></div>
+    <div class="sliders">
+      <div class="slider-left">
+        <input
+          class="slider-input"
+          id="slider-left"
+          type="range"
+          min="0"
+          max="50"
+          value="0"
+        />
+      </div>
+      <div class="slider-right">
+        <input
+          class="slider-input"
+          id="slider-right"
+          type="range"
+          min="0"
+          max="50"
+          value="0"
+        />
+      </div>
+      <div class="slider-buttons">
+        <button id="slider-fullspeed">Vollgas</button>
+        <button id="slider-50">50%</button>
+        <button id="slider-stop">Stop</button>
+      </div>
+    </div>
     <script src="socket.io/socket.io.js"></script>
     <script src="assets/Decoder.js"></script>
     <script src="assets/YUVCanvas.js"></script>
