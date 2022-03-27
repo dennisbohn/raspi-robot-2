@@ -1,19 +1,17 @@
-from buildhat import Motor
+from buildhat import MotorPair
 import re
 import sys
 import logging
 
-motorA = Motor('A')
-motorB = Motor('B')
+pair = MotorPair('A', 'B')
 
-motorA.off()
-motorB.off()
+pair.stop()
 
 motor = {
-    'A': motorA,
-    'B': motorB
+    'A': 0,
+    'B': 0
 }
-pattern = re.compile("^[AB]\d+$")
+pattern = re.compile("^[AB]\-?\d+$")
 
 print("start")
 for line in sys.stdin:
@@ -23,4 +21,5 @@ for line in sys.stdin:
         if (re.match(pattern, split)):
             wheel = split[0:1]
             speed = int(split[1:])
-            motor[wheel].start(speed)
+            motor[wheel] = speed
+    pair.start(motor["A"], motor["B"] * -1)

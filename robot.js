@@ -33,7 +33,6 @@ socket.on("connect", () => {
   videoBuffer.addReceiverSocket(socket);
 });
 
-// Left wheel
 socket.on("motors", (data) => {
   motors.setMotors(data);
 });
