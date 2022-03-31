@@ -93,10 +93,11 @@ var motors = new Motors();
   var joystick = document.querySelector(".joystick");
   var button = joystick.querySelector(".joystick-button");
   var updateMotors = function (x, y) {
-    var a, b;
-    a = b = -100 * y;
-    motors.A = a;
-    motors.B = b;
+    var l, r;
+    l = Math.max(-100, Math.min(100, x * 50 - y * 50));
+    r = Math.max(-100, Math.min(100, -x * 50 - y * 50));
+    motors.A = r;
+    motors.B = l;
     motors.send();
   };
   var setJoystickPosition = function (x, y) {
