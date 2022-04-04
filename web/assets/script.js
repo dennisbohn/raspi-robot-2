@@ -113,21 +113,34 @@ var motors = new Motors();
     button.style.top = (y + 1) * 50 + "%";
     updateMotors(x, y);
   };
-  window.addEventListener("mousemove", function (e) {
+  var start = function (e) {
     var joystickBox = joystick.getBoundingClientRect();
-    x = ((e.clientX - joystickBox.x) / joystickBox.width) * 2 - 1;
-    y = ((e.clientY - joystickBox.y) / joystickBox.height) * 2 - 1;
+    var clientX = e.clientX || e.touches[0].clientX;
+    var clientY = e.clientY || e.touches[0].clientY;
+    active = true;
+    x = ((clientX - joystickBox.x) / joystickBox.width) * 2 - 1;
+    y = ((clientY - joystickBox.y) / joystickBox.height) * 2 - 1;
+    setJoystickPosition(x, y);
+  };
+  var move = function (e) {
+    var joystickBox = joystick.getBoundingClientRect();
+    var clientX = e.clientX || e.touches[0].clientX;
+    var clientY = e.clientY || e.touches[0].clientY;
+    x = ((clientX - joystickBox.x) / joystickBox.width) * 2 - 1;
+    y = ((clientY - joystickBox.y) / joystickBox.height) * 2 - 1;
     if (active) {
       setJoystickPosition(x, y);
       e.preventDefault();
     }
-  });
-  joystick.addEventListener("mousedown", function (e) {
-    active = true;
-    setJoystickPosition(x, y);
-  });
-  window.addEventListener("mouseup", function (e) {
+  };
+  var stop = function (e) {
     active = false;
     setJoystickPosition(0, 0);
-  });
+  };
+  joystick.addEventListener("mousedown", start);
+  joystick.addEventListener("touchstart", start);
+  window.addEventListener("touchmove", move, { passive: false });
+  window.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", stop);
+  window.addEventListener("touchend", stop);
 })();
