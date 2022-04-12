@@ -1,5 +1,4 @@
 const readFileSync = require("fs").readFileSync;
-const Camera = require("./js/Camera.js");
 const Motors = require("./js/Motors.js");
 const VideoBuffer = require("./js/VideoBuffer.js");
 const io = require("socket.io-client");
@@ -11,9 +10,10 @@ const videoBuffer = new VideoBuffer();
 const spawn = require("child_process").spawn;
 const pythonProcess = spawn("python3", ["-u", "./js/Motors.py"]);
 const motors = new Motors(pythonProcess);
+const Raspivid = require("./js/Raspivid.js");
 
 // Raspberry pi camera
-const camera = new Camera({
+const raspivid = new Raspivid({
   width: 1280,
   height: 720,
   framerate: 30,
@@ -23,10 +23,10 @@ const camera = new Camera({
 });
 
 // Send all chunks to the videobuffer
-camera.on("videoChunk", videoBuffer.pushVideoChunk);
+raspivid.on("data", videoBuffer.pushVideoChunk);
 
 // Start camera
-camera.start();
+raspivid.start();
 
 // Connect to websocket
 socket.on("connect", () => {
