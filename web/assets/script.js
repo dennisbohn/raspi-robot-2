@@ -54,8 +54,8 @@ var motors = new Motors();
   var slider50 = document.getElementById("slider-50");
   var sliderStop = document.getElementById("slider-stop");
   var updateMotors = function () {
-    motors.A = sliderLeft.value;
-    motors.B = sliderRight.value;
+    motors.A = sliderRight.value;
+    motors.B = sliderLeft.value;
     motors.send();
   };
   sliderFullspeed.addEventListener("click", () => {
@@ -92,13 +92,17 @@ var motors = new Motors();
   var active = false;
   var joystick = document.querySelector(".joystick");
   var button = joystick.querySelector(".joystick-button");
+  var sliderLeft = document.getElementById("slider-left");
+  var sliderRight = document.getElementById("slider-right");
   var updateMotors = function (x, y) {
     var l, r;
-    l = Math.max(-100, Math.min(100, x * 50 - y * 50));
-    r = Math.max(-100, Math.min(100, -x * 50 - y * 50));
+    l = Math.max(-100, Math.min(100, x * 100 - y * 100));
+    r = Math.max(-100, Math.min(100, -x * 100 - y * 100));
     motors.A = r;
     motors.B = l;
     motors.send();
+    sliderLeft.value = l;
+    sliderRight.value = r;
   };
   var setJoystickPosition = function (x, y) {
     var sin, cos, angle;
@@ -143,4 +147,25 @@ var motors = new Motors();
   window.addEventListener("mousemove", move);
   window.addEventListener("mouseup", stop);
   window.addEventListener("touchend", stop);
+})();
+
+/* ----- */
+/* VIDEO */
+/* ----- */
+
+(function () {
+  var button = document.getElementById("video");
+  button.textContent = "Video stoppen";
+  button.className = "disable";
+  button.addEventListener("click", () => {
+    if (button.className === "disable") {
+      socket.emit("camera", "stop");
+      button.textContent = "Video starten";
+      button.className = "enable";
+    } else {
+      socket.emit("camera", "start");
+      button.textContent = "Video stoppen";
+      button.className = "disable";
+    }
+  });
 })();

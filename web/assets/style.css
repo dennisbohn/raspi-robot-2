@@ -26,6 +26,7 @@ body {
 
 .sliders {
   display: flex;
+  align-items: center;
 }
 
 .slider-input {
@@ -56,7 +57,7 @@ body {
   width: 160px;
   height: 160px;
   position: relative;
-  margin: 20px 0 20px 50px;
+  margin: 20px 50px;
 }
 
 .joystick::before {
@@ -81,4 +82,30 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* VIDEO */
+
+.video {
+  justify-content: center;
+}
+
+.video button {
+  margin: 5px 0;
+  background: #ccc;
+  border: 0;
+  padding: 5px 15px;
+  width: 115px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.video button.disable {
+  background-color: #c00;
+  color: #fff;
+}
+
+.video button.enable {
+  background-color: #060;
+  color: #fff;
 }
