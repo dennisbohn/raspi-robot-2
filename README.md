@@ -68,7 +68,7 @@ Folgende Software muss installiert werden.
 Dies ist über folgenden Befehl möglich.
 
 ```
-sudo apt-get install -y python3 git
+sudo apt-get install -y python3 python3-pip git
 ```
 
 ### 4. Node.js installieren ###
