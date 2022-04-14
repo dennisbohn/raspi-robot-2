@@ -16,11 +16,11 @@ class Raspivid extends EventEmitter {
     for (var prop in this.options) {
       this.args.push("--" + prop, this.options[prop]);
     }
-    this.args.push("-o", "-");
+    this.args.push("--codec", "h264", "--flush", "--output", "-");
   }
   start() {
     if (this.video_process !== null) return;
-    this.video_process = child.spawn("raspivid", this.args, {
+    this.video_process = child.spawn("libcamera-vid", this.args, {
       stdio: ["ignore", "pipe", "ignore"],
     });
     this.video_process.stdout
