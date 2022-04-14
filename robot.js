@@ -14,12 +14,12 @@ const Raspivid = require("./js/Raspivid.js");
 
 // Raspberry pi camera
 const raspivid = new Raspivid({
-  width: 1280,
-  height: 720,
+  width: 640,
+  height: 360,
   framerate: 30,
   profile: "baseline",
   timeout: 0,
-  bitrate: 2500000,
+  bitrate: 1000000,
 });
 
 // Send all chunks to the videobuffer
@@ -35,4 +35,9 @@ socket.on("connect", () => {
 
 socket.on("motors", (data) => {
   motors.setMotors(data);
+});
+
+socket.on("camera", function (value) {
+  if (value === "start") raspivid.start();
+  if (value === "stop") raspivid.stop();
 });
