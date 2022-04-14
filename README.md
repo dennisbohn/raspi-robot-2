@@ -37,7 +37,9 @@ Nachdem der RaspberryPi mit der neuen SD-Karte das erste Mal gestartet wurde, so
 Du kannst Putty hier herunter laden:
 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
-Danach muss der PI für die Kamera und den Build-HAT konfiguriert werden. Dazu wird über folgenden Befehl das Konfigurationstool aufgerufen.
+Im Idealfall kannst du bei Putty als Adresse auch "raspberrypi" anstelle der IP-Adresse eingeben.
+
+Wenn du dich erfolgreich verbunden hast, muss der PI für die Kamera und den Build-HAT konfiguriert werden. Dazu wird über folgenden Befehl das Konfigurationstool aufgerufen.
 
 ```
 sudo raspi-config
