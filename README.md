@@ -140,7 +140,7 @@ PM2 wird folgendermaßen installiert.
 
 ```
 cd ~/raspi-robot-2
-npm install pm2 -g
+sudo npm install pm2 -g
 ```
 
 Nun solltest du das Script mit folgendem Befehl starten können.
