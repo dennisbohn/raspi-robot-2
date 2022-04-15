@@ -68,7 +68,7 @@ Folgende Software muss installiert werden.
 Dies ist über folgenden Befehl möglich.
 
 ```
-sudo apt-get install -y python3 git
+sudo apt-get install -y python3 python3-pip git
 ```
 
 ### 4. Node.js installieren ###
@@ -140,7 +140,7 @@ PM2 wird folgendermaßen installiert.
 
 ```
 cd ~/raspi-robot-2
-npm install pm2 -g
+sudo npm install pm2 -g
 ```
 
 Nun solltest du das Script mit folgendem Befehl starten können.
