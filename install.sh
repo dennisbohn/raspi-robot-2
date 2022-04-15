@@ -39,5 +39,10 @@ pm2 start robot.js
 # save pm2 configuration
 pm2 save
 
+# output
+clear
+echo "Die Installation wurde abgeschlossen."
+echo "Das Fenster kann geschlossen werden."
+
 # reboot system
 sudo reboot
