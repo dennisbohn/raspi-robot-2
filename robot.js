@@ -3,7 +3,7 @@ const Motors = require("./js/Motors.js");
 const VideoBuffer = require("./js/VideoBuffer.js");
 const io = require("socket.io-client");
 const authToken = readFileSync(".authToken").toString().trim();
-const socket = io("wss://robot.bohn.media/", {
+const socket = io("wss://beta.robot.bohn.media/", {
   auth: { token: authToken },
 });
 const videoBuffer = new VideoBuffer();
