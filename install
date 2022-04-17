@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# get flags
+while getopts h:a: flag
+do
+    case "${flag}" in
+        h) hostname=${OPTARG};;
+        a) authtoken=${OPTARG};;
+    esac
+done
+
 # disable serial console and enable serial hardware (/dev/serial0)
 sudo raspi-config nonint do_serial 2
 
@@ -30,20 +39,21 @@ npm update
 # run pm2 on startup
 sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp $HOME
 
+# make update script executable
+chmod +x ./update_robot
+
+# allow global execution of update script
+sudo cp -f ./update_robot /usr/local/bin/update_robot
+
+# set hostname and authtoken
+node config set hostname $hostname
+node config set authtoken $authtoken
+
 # start robot
 pm2 start robot.js
 
 # save pm2 configuration
 pm2 save
-
-# delete install script
-rm install.sh
-
-# make update script executable
-chmod +x ./update_robot
-
-# allow global execution of update script
-sudo mv -f ./update_robot /usr/local/bin/update_robot
 
 # output
 clear
