@@ -40,10 +40,10 @@ pm2 save
 rm install.sh
 
 # make update script executable
-chmod +x ./update_robot.sh
+chmod +x ./update_robot
 
 # allow global execution of update script
-sudo mv -f ./update_robot.sh /usr/local/bin/update_robot
+sudo mv -f ./update_robot /usr/local/bin/update_robot
 
 # output
 clear
