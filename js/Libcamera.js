@@ -8,6 +8,10 @@ class Libcamera extends EventEmitter {
   constructor(options) {
     super();
     this.options = options || {};
+    this.options.width = this.options.width || 640;
+    this.options.height = this.options.height || 360;
+    this.options.framerate = this.options.framerate || 30;
+    this.options.bitrate = this.options.bitrate || 1000000;
     this.updateArguments();
     this.video_process = null;
   }
