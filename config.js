@@ -18,7 +18,7 @@ const saveConfig = function () {
 const set = function (key, value) {
   if (value === undefined) return;
   // Server
-  if (["authToken", "hostname"].includes(key)) {
+  if (["authtoken", "hostname"].includes(key)) {
     config.server = config.server || {};
     config.server[key] = value;
     saveConfig();

@@ -10,12 +10,12 @@ const ChildProcess = require("child_process");
 const configFile = __dirname + "/config.json";
 if (!fs.existsSync(configFile)) process.exit();
 const config = JSON.parse(fs.readFileSync("config.json").toString());
-if (!config.server || !config.server.hostname || !config.server.authToken)
+if (!config.server || !config.server.hostname || !config.server.authtoken)
   process.exit();
 
 // Connect to server
 const socket = io("wss://" + config.server.hostname + "/", {
-  auth: { token: config.server.authToken },
+  auth: { token: config.server.authtoken },
 });
 
 // Create video buffer for output stream
