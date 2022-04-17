@@ -18,5 +18,9 @@ git clone https://github.com/dennisbohn/raspi-robot-2.git
 # move config file back to raspi-robot-2 folder
 mv ./config.json ./raspi-robot-2
 
+# install packages
+cd ./raspi-robot-2
+npm update
+
 # start robot
 pm2 start robot
