@@ -22,5 +22,10 @@ mv ./config.json ./raspi-robot-2
 cd ./raspi-robot-2
 npm update
 
-# start robot
-pm2 start robot
+# restart robot
+clear
+echo "Das Update wurde abgeschlossen."
+echo "Das Fenster kann geschlossen werden."
+
+# reboot system
+sudo reboot
