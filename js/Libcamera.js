@@ -4,7 +4,7 @@ const Stream = require("stream");
 const NALseparator = Buffer.from([0, 0, 0, 1]);
 const child = require("child_process");
 
-class Raspivid extends EventEmitter {
+class Libcamera extends EventEmitter {
   constructor(options) {
     super();
     this.options = options || {};
@@ -16,7 +16,17 @@ class Raspivid extends EventEmitter {
     for (var prop in this.options) {
       this.args.push("--" + prop, this.options[prop]);
     }
-    this.args.push("--codec", "h264", "--flush", "--output", "-");
+    this.args.push(
+      "--codec",
+      "h264",
+      "--timeout",
+      "0",
+      "--profile",
+      "baseline",
+      "--flush",
+      "--output",
+      "-"
+    );
   }
   start() {
     if (this.video_process !== null) return;
@@ -44,4 +54,4 @@ class Raspivid extends EventEmitter {
   }
 }
 
-module.exports = Raspivid;
+module.exports = Libcamera;
