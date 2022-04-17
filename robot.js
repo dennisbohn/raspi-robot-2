@@ -1,8 +1,14 @@
+// Load config
+const configFile = __dirname + "/config.json";
+if (!fs.existsSync(configFile)) process.exit();
+const config = JSON.parse(fs.readFileSync("config.json").toString());
+if (!config.server || !config.server.hostname || !config.server.authToken)
+  process.exit();
+
 const fs = require("fs");
 const Motors = require("./js/Motors.js");
 const VideoBuffer = require("./js/VideoBuffer.js");
 const io = require("socket.io-client");
-const config = JSON.parse(fs.readFileSync("config.json").toString());
 const socket = io("wss://" + config.server.hostname + "/", {
   auth: { token: config.server.authToken },
 });
