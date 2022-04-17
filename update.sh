@@ -20,6 +20,7 @@ mv ./config.json ./raspi-robot-2
 
 # install packages
 cd ./raspi-robot-2
+echo 'NPM UPDATE'
 npm update
 
 # start robot
