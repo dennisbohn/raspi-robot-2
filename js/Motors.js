@@ -2,11 +2,13 @@ class Motors {
   constructor(pythonProcess) {
     this.line = 0;
     this.queue = {};
-    this.timeout = null;
+    this.speedTimeout = 0;
+    this.stopTimeout = 0;
     this.changed = false;
     this.py = pythonProcess;
     this.setMotors = this.setMotors.bind(this);
     this.updateSpeed = this.updateSpeed.bind(this);
+    this.stop = this.stop.bind(this);
     this.stdin = this.stdin.bind(this);
     this.stdout = this.stdout.bind(this);
     this.py.stdout.on("data", this.stdout);
@@ -17,11 +19,21 @@ class Motors {
       if (typeof motors.B === "number") this.queue.B = motors.B;
     }
     this.changed = true;
-    if (this.timeout) return;
+    if (this.speedTimeout) return;
     this.updateSpeed();
-    this.timeout = setTimeout(() => {
+
+    // stop timeout
+    if (this.stopTimeout) {
+      clearTimeout(this.stopTimeout);
+      this.stopTimeout = 0;
+    }
+    if (this.queue.A === 0 && this.queue.B === 0) this.stop();
+
+    // speed timeout
+    this.speedTimeout = setTimeout(() => {
       if (this.changed) this.updateSpeed();
-      this.timeout = null;
+      this.speedTimeout = 0;
+      if (this.queue.A === 0 && this.queue.B === 0) this.stop();
     }, 50);
   }
   updateSpeed() {
@@ -31,6 +43,12 @@ class Motors {
     }
     this.stdin(output.join(" "));
     this.changed = false;
+  }
+  stop() {
+    this.stopTimeout = setTimeout(() => {
+      this.stdin("STOP");
+      this.stopTimeout = 0;
+    }, 200);
   }
   stdin(data) {
     this.py.stdin.write(data + "\n");
