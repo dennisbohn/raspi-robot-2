@@ -6,6 +6,8 @@ class VideoBuffer extends EventEmitter {
     super();
     this.keyframe = 0;
     this.frames = [];
+    this.sps = null;
+    this.pps = null;
     this.pushVideoChunk = this.pushVideoChunk.bind(this);
     this.addReceiverSocket = this.addReceiverSocket.bind(this);
   }
