@@ -44,7 +44,7 @@ socket.on("motors", (data) => {
   motors.setMotors(data);
 });
 
-// Camera controlls
+// Camera controls
 socket.on("camera", function (value) {
   if (value === "start") libcamera.start();
   if (value === "stop") libcamera.stop();
