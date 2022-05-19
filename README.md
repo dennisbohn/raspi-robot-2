@@ -46,9 +46,6 @@ sudo raspi-config
 ```
 
 Daraufhin nimmt man folgende Einstellungen vor:
-- 3 Interface Options
-  - I1 Legacy Camera
-    - Ja
 - I6 Serial Port
   - Would you like a login shell to be accessible over serial?
     - Nein
@@ -117,7 +114,7 @@ wget https://raw.githubusercontent.com/RaspberryPiFoundation/python-build-hat/a4
 
 ### 7. AuthToken hinterlegen ###
 
-Damit der Roboter sich der Roboter korrekt am Server authentifizieren kann, packe die Datei ".authToken" in den Ordner "raspi-robot-2". Andernfalls wird der Server kein Bild vom Raspberry Pi annehmen.
+Damit sich der Roboter korrekt am Server authentifizieren kann, packe die Datei ".authToken" in den Ordner "raspi-robot-2". Andernfalls wird der Server kein Bild vom Raspberry Pi annehmen.
 
 ### 8. Script testen ###
 
